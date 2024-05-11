@@ -50,15 +50,10 @@ app.options('*', (req, res) => {
 // Routes
 app.use(Router);
 
-// Default route
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
 // Create HTTP server
 export const server = http.createServer(app);
 
 // Start server
 connectDB().then(() => server.listen(PORT, () => {
-  console.log('Server running at http://localhost:' + PORT);
+  console.log('Server running at http://localhost:' + PORT + '/');
 }));
