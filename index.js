@@ -1,5 +1,4 @@
 import express from 'express';
-import http from 'http';
 import Router from './routes/router.js';
 import serverMiddleware from './middlewares/server.js';
 
@@ -10,6 +9,9 @@ import 'dotenv/config'
 
 const app = express();
 const PORT = 1024 || process.env.PORT;
+export const server = connectDB().then(() => app.listen(PORT, () => {
+  console.log('Server running at http://localhost:' + PORT + '/');
+}));
 
 // CORS middleware
 app.use((req, res, next) => {
@@ -49,11 +51,3 @@ app.options('*', (req, res) => {
 
 // Routes
 app.use(Router);
-
-// Create HTTP server
-export const server = http.createServer(app);
-
-// Start server
-connectDB().then(() => server.listen(PORT, () => {
-  console.log('Server running at http://localhost:' + PORT + '/');
-}));
