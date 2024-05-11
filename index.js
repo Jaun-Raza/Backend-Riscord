@@ -48,16 +48,12 @@ app.options('*', (req, res) => {
 });
 
 // Routes
-// app.use(Router);
-
-app.get('/', (req, res) => { 
-    res.send('Hello From Riscord!');
-})
+app.use(Router);
 
 // Create HTTP server
-export const server = http.createServer(app);
+// export const server = http.createServer(app);
 
 // Start server
-connectDB().then(() => server.listen(PORT, () => {
+connectDB().then(() => app.listen(PORT, () => {
   console.log('Server running at http://localhost:' + PORT + '/');
 }));
