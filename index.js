@@ -1,5 +1,5 @@
 import express from 'express';
-import http from 'http';
+import https from 'https';
 import Router from './routes/router.js';
 import serverMiddleware from './middlewares/server.js';
 
@@ -51,7 +51,7 @@ app.options('*', (req, res) => {
 app.use(Router);
 
 // Create HTTP server
-export const server = http.createServer(app);
+export const server = https.createServer(app);
 
 // Start server
 connectDB().then(() => server.listen(PORT, () => {
