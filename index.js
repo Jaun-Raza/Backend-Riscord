@@ -48,7 +48,11 @@ app.options('*', (req, res) => {
 });
 
 // Routes
-app.use(Router);
+// app.use(Router);
+
+app.get('/', (req, res) => { 
+    res.send('Hello From Riscord!');
+})
 
 // Create HTTP server
 export const server = https.createServer(app);
