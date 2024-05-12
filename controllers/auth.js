@@ -5,7 +5,7 @@ import { User } from '../models/user.js';
 
 export async function signUp(req, res) {
     const { email, username, bio, password } = req.body;
-    console.log(req.body)
+    
     const randomId = Math.floor(Math.random() * 99999999)
 
     const salts = await bcrypt.genSalt(10);
@@ -44,11 +44,11 @@ export async function logIn(req, res) {
 
     try {
         await User.findOne({ email: email }).then(async (foundUser) => {
-            if (!foundUser) return res.status(409).json({ error: 'There is no user with this credientials, try register yourself!', success: false });
+            if (!foundUser) return res.status(409).json({ error: 'Invalid Credentials, try register yourself!', success: false });
 
             const comparePass = await bcrypt.compare(password, foundUser.password);
             if (!comparePass) {
-                return res.status(401).json({ error: "Wrong Password", success: false })
+                return res.status(401).json({ error: "Invalid Credentials", success: false })
             } else {
 
                 const token = req.token;
@@ -64,7 +64,6 @@ export async function logIn(req, res) {
 }
 
 export async function getData(req, res) {
-    console.log('hit');
   const data = req.data;
 
   await User.findOne({ email: data.email }).then((foundUser) => {

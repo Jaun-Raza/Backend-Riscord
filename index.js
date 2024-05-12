@@ -11,7 +11,6 @@ import 'dotenv/config'
 // Socket.io
 import { Server } from 'socket.io';
 
-
 const app = express();
 const PORT = 1024 || process.env.PORT;
 
@@ -20,17 +19,6 @@ const server = connectDB().then(() => app.listen(PORT, () => {
 }));
 
 const io = new Server(server);
-
-// Socket.io Connection
-io.on('connection', (socket) => {
-
-    console.log('connection secured!')
-
-    socket.on('all-users', async (data) => {
-      io.emit('online-users', data.uid)
-    });
-    
-})
 
 // CORS middleware
 app.use((req, res, next) => {
@@ -55,9 +43,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Other middleware
-app.use(serverMiddleware);
-
 // Handle OPTIONS requests
 app.options('*', (req, res) => {
   // Set CORS headers for the preflight request
@@ -67,6 +52,20 @@ app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Credentials', true);
   res.sendStatus(200);
 });
+
+// Socket.io Connection
+io.on('connection', (socket) => {
+
+    console.log('connection secured!')
+
+    socket.on('all-users', async (data) => {
+      io.emit('online-users', data.uid)
+    });
+    
+})
+
+// Other middleware
+app.use(serverMiddleware);
 
 // Routes
 app.use(Router);
