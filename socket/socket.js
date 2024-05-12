@@ -1,5 +1,5 @@
 import { Server as SocketIOServer } from 'socket.io';
-import server from '../index.js';
+import { server } from '../index.js';
 
 const io = new SocketIOServer(server);
 

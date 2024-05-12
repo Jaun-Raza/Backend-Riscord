@@ -51,12 +51,3 @@ app.options('*', (req, res) => {
 
 // Routes
 app.use(Router);
-app.use(Router);
-
-// Create HTTP server
-// export const server = http.createServer(app);
-
-// Start server
-connectDB().then(() => app.listen(PORT, () => {
-  console.log('Server running at http://localhost:' + PORT + '/');
-}));
