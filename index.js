@@ -5,13 +5,32 @@ import serverMiddleware from './middlewares/server.js';
 // DB
 import { connectDB } from './db/db.js'
 
+// ENV
 import 'dotenv/config'
+
+// Socket.io
+import { Server } from 'socket.io';
+
 
 const app = express();
 const PORT = 1024 || process.env.PORT;
-export const server = connectDB().then(() => app.listen(PORT, () => {
+
+const server = connectDB().then(() => app.listen(PORT, () => {
   console.log('Server running at http://localhost:' + PORT + '/');
 }));
+
+const io = new Server(server);
+
+// Socket.io Connection
+io.on('connection', (socket) => {
+
+    console.log('connection secured!')
+
+    socket.on('all-users', async (data) => {
+      io.emit('online-users', data.uid)
+    });
+    
+})
 
 // CORS middleware
 app.use((req, res, next) => {
