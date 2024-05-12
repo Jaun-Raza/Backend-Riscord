@@ -69,12 +69,14 @@ export async function getData(req, res) {
   await User.findOne({ email: data.email }).then((foundUser) => {
     return res.status(200).json({ user: {
         uid: foundUser.uid,
+        pfp: foundUser.pfp || '',
         email: foundUser.email,
         username: foundUser.username,
         bio: foundUser.bio,
         joinedAt: foundUser.createdAt,
         friends: foundUser.friends,
-        blockedFriends: foundUser.blockedFriends
+        blockedFriends: foundUser.blockedFriends,
+        isAdmin: foundUser.isAdmin
     }, success: true });
   });
 }
